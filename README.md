@@ -114,9 +114,6 @@ void k_dispatch_reg0(PIRQDATA pIRQx)
 ## Create Window Manager Event from IRQ
 
 ```
-
-
-
 void k_irq_device_event(MSGIRQ type,ULONG timer,void FAR *data)
 {
 	BOOL bRet = FALSE;
@@ -189,6 +186,22 @@ PFXOSMESSAGE k_create_msg(MSGIRQ type,ULONG timer,void FAR *data)
 ## Detect and Create Various Mouse States based on time/button/movement 
 
 ```
+
+typedef struct _mouse_msg_state
+{
+	ULONG lastEvent;
+	BOOL  buttonLeftDown;
+	ULONG lastLeftDown;
+	BOOL  buttonRightDown;
+	ULONG lastRightDown;
+	BOOL  buttonMiddleDown;
+	ULONG lastMiddleDown;
+	UINT  lastX;
+	UINT  lastY;
+}MOUSE_MSG_STATE;
+
+static MOUSE_MSG_STATE _k_mouseState;
+
 PFXOSMESSAGE k_updateMouseState(PFXOSMESSAGE pmsg,ULONG timer,void FAR *data)
 {
 	ULONG lastTimer = _k_mouseState.lastEvent;
